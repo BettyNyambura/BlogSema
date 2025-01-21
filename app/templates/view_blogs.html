@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="centered-heading">Explore Amazing Blogs</h1>
+
+    <div class="view-blogs-container">
+        {% if blogs %}
+            <div class="blogs-list">
+                {% for blog in blogs %}
+                    <div class="blog {% if blog.user_id == current_user.id %}user-blog{% endif %}">
+                        <h2 class="blog-title">{{ blog.title }}</h2>
+                        <p class="blog-content">{{ blog.content }}</p>
+                        <p class="blog-tags"><small>Tags: {{ blog.tags }}</small></p>
+
+                        {% if blog.user_id == current_user.id %}
+                            <p class="user-blog-indicator">This is Your Blog</p>  <!-- Indicating the user's own blog -->
+                            <form action="{{ url_for('delete_blog', blog_id=blog.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="delete-btn">Delete Blog</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-blogs">No blogs created yet.</p>
+        {% endif %}
+    </div>
+    <div class="back-to-home">
+        <a href="{{ url_for('home') }}" class="back-btn">Back to Home</a>
+    </div>
+    {% endblock %}

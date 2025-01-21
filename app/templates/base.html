@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" crossorigin="">
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.png') }}" type="image/svg+xml">
+
+    <title>BlogSema</title>
+</head>
+<body class="{{ page_class|default('default-page') }}">
+    {% if not exclude_navbar%}
+        <nav class="navbar">
+            <div class="nav-left">
+                <a href="{{ url_for('home') }}">BlogSema</a>
+            </div>
+
+            <div class="nav-right">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('view_blogs') }}">Read Blogs</a>
+                    <a href="{{ url_for('logout') }}" class="logout-btn">Log Out</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('signup') }}">Sign Up</a>
+                {% endif %}
+            </div>
+        </nav>
+    {%endif%}
+    <div class="container">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+</body>
+</html>

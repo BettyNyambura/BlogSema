@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero__content">
+            <h1>Welcome to BlogSema</h1>
+            <p>Your platform to share and read amazing blogs!</p>
+
+            {% if not current_user.is_authenticated %}  <!-- Check if user is not logged in -->
+                <a href="{{ url_for('signup') }}" class="cta-button">Join Now</a>
+            {% endif %}
+            
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why Choose BlogSema?</h2>
+        <div class="features__container">
+            <div class="feature">
+                <i class="ri-pencil-line"></i>
+                {% if current_user.is_authenticated %}
+                    <h3><a href="{{ url_for('create_blog') }}" class="feature-link">Create Your Blog</a></h3>
+                    <p>Share your thoughts with the world by creating blogs easily.</p>
+                {% else %}
+                    <h3><a href="{{ url_for('login', next=url_for('create_blog')) }}" class="feature-link">Create Your Blog</a></h3>
+                    <p>Please log in to share your thoughts with the world.</p>
+                {% endif %}
+            </div>
+            <div class="feature">
+                <i class="ri-eye-line"></i>
+                {% if current_user.is_authenticated %}
+                    <h3><a href="{{ url_for('view_blogs') }}" class="feature-link">Read Blogs</a></h3>
+                    <p>Explore amazing articles from talented writers.</p>
+                {% else %}
+                    <h3><a href="{{ url_for('login', next=url_for('view_blogs')) }}" class="feature-link">Read Blogs</a></h3>
+                    <p>Please log in to explore amazing articles from talented writers.</p>
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2025 BlogSema. All rights reserved.</p>
+    </footer>
+{% endblock %}
